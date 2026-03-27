@@ -2,7 +2,9 @@ package com.taskflow.taskflow.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "tache")
 public class Tache {

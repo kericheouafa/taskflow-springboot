@@ -1,7 +1,9 @@
 package com.taskflow.taskflow.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "statut")
 public class Statut {
