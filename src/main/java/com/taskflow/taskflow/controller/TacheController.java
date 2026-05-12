@@ -5,8 +5,11 @@ import com.taskflow.taskflow.service.TacheService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/taches")
+
 public class TacheController {
 
     private final TacheService tacheService;
