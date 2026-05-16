@@ -2,6 +2,7 @@ package com.taskflow.taskflow.controller;
 
 import com.taskflow.taskflow.model.Tache;
 import com.taskflow.taskflow.service.TacheService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class TacheController {
     }
 
     @PostMapping
-    public Tache createTache(@RequestBody Tache tache) {
+    public Tache createTache(@Valid @RequestBody Tache tache) {
         return tacheService.saveTache(tache);
     }
 

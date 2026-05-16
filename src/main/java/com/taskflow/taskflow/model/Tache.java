@@ -2,6 +2,8 @@ package com.taskflow.taskflow.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data
@@ -14,12 +16,18 @@ public class Tache {
     private int id;
 
     @Column(nullable = false)
+
+    @NotBlank
+    @Size(min=3, max=100)
     private String titre;
 
+    @Min(1)
+    @Max(3)
     private int priorite;
 
     private LocalDateTime dateCreation;
-
+    @NotNull
+    @Future
     private LocalDateTime dateLimite;
 
     @ManyToOne
