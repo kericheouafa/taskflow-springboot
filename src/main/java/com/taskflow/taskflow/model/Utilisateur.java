@@ -20,6 +20,7 @@ public class Utilisateur {
 
     @Column(nullable = false)
     private String email;
+    private String role;
 
     private String motDePasse;
 
