@@ -33,4 +33,24 @@ public class AuthController {
         String token = jwtService.generateToken(utilisateur.get().getEmail());
         return ResponseEntity.ok(token);
     }
+
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody LoginRequest request) {
+
+        if (utilisateurRepository.findByEmail(request.getEmail()).isPresent()) {
+            return ResponseEntity.status(400).body("Email déjà utilisé");
+        }
+
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setEmail(request.getEmail());
+        utilisateur.setMotDePasse(passwordEncoder.encode(request.getPassword()));
+        utilisateur.setRole("USER");
+        utilisateur.setDateCreation(java.time.LocalDateTime.now());
+
+        utilisateurRepository.save(utilisateur);
+
+        String token = jwtService.generateToken(utilisateur.getEmail());
+        return ResponseEntity.ok(token);
+    }
 }
