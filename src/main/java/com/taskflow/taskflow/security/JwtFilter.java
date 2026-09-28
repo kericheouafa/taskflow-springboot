@@ -4,7 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+//import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -24,6 +24,13 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
+
+    protected boolean shouldNotFilter(HttpServletRequest request) {  /*tant le visiteur n'a pas
+     encore de compte ,il peux creer un compte et acceder a login, sans lui
+      demander un token ! c'est logique*/
+        String path = request.getServletPath();
+        return path.startsWith("/api/auth/");
+    }
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)

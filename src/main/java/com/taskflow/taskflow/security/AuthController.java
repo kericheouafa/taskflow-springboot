@@ -1,22 +1,27 @@
 package com.taskflow.taskflow.security;
-
 import com.taskflow.taskflow.model.Utilisateur;
 import com.taskflow.taskflow.repository.UtilisateurRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
+import com.taskflow.taskflow.security.JwtService;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
+
 public class AuthController {
 
     private final JwtService jwtService;
     private final UtilisateurRepository utilisateurRepository;
     private final PasswordEncoder passwordEncoder;
+    public AuthController(JwtService jwtService,
+                          UtilisateurRepository utilisateurRepository,
+                          PasswordEncoder passwordEncoder) {
+        this.jwtService = jwtService;
+        this.utilisateurRepository = utilisateurRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
@@ -53,4 +58,5 @@ public class AuthController {
         String token = jwtService.generateToken(utilisateur.getEmail());
         return ResponseEntity.ok(token);
     }
+
 }
