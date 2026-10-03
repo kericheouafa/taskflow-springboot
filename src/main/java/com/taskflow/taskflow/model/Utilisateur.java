@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 
-// @Data                  pb lombok on va mettre getters et setters manuellement
+// Getters/setters écrits à la main : Lombok (@Data) n'était pas pris en compte sur cette classe
 
 @Entity
 @Table(name = "utilisateur")

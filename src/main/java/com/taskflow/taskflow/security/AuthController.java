@@ -1,6 +1,7 @@
 package com.taskflow.taskflow.security;
 import com.taskflow.taskflow.model.Utilisateur;
 import com.taskflow.taskflow.repository.UtilisateurRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         Optional<Utilisateur> utilisateur = utilisateurRepository.findByEmail(request.getEmail());
 
         if (utilisateur.isEmpty()) {
@@ -41,7 +42,7 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
 
         if (utilisateurRepository.findByEmail(request.getEmail()).isPresent()) {
             return ResponseEntity.status(400).body("Email déjà utilisé");

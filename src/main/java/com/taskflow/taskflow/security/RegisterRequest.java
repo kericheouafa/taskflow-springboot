@@ -1,18 +1,20 @@
 package com.taskflow.taskflow.security;
-
-
-// Getters/setters écrits à la main : Lombok (@Data) n'était pas pris en compte sur cette classe
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
+public class RegisterRequest {
 
-public class LoginRequest {
     @NotBlank(message = "L'email est obligatoire")
     @Email(message = "L'adresse email n'est pas valide")
-    private String email;
+private String email;
+
+
     @NotBlank(message = "Le mot de passe est obligatoire")
-    private String password;
+    @Size(min = 8, message = "8 caractères minimum requis")
+private String password;
+
+
 
     public String getEmail() {
         return email;
@@ -27,5 +29,5 @@ public class LoginRequest {
     public void setPassword(String password) {
         this.password = password;
     }
-}
 
+}

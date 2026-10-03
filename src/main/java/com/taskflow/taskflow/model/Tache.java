@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.*;
-//import lombok.Data;
 
-//@Data
+
+
 @Entity
 @Table(name = "tache")
 public class Tache {
