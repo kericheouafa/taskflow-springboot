@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.taskflow.taskflow.security.JwtService;
 import java.util.Optional;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -28,8 +29,9 @@ public class AuthController {
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         Optional<Utilisateur> utilisateur = utilisateurRepository.findByEmail(request.getEmail());
 
-        if (utilisateur.isEmpty()) {
-            return ResponseEntity.status(401).body("Email incorrect");
+        if (utilisateur.isEmpty()
+                || !passwordEncoder.matches(request.getPassword(), utilisateur.get().getMotDePasse())) {
+            return ResponseEntity.status(401).body(Map.of("message", "Email ou mot de passe incorrect"));
         }
 
         if (!passwordEncoder.matches(request.getPassword(), utilisateur.get().getMotDePasse())) {
@@ -45,7 +47,7 @@ public class AuthController {
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
 
         if (utilisateurRepository.findByEmail(request.getEmail()).isPresent()) {
-            return ResponseEntity.status(400).body("Email déjà utilisé");
+            return ResponseEntity.status(409).body(Map.of("email", "Email déjà utilisé"));
         }
 
         Utilisateur utilisateur = new Utilisateur();
