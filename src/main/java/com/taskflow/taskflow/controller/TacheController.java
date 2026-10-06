@@ -3,6 +3,8 @@ package com.taskflow.taskflow.controller;
 import com.taskflow.taskflow.model.Tache;
 import com.taskflow.taskflow.service.TacheService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -19,18 +21,40 @@ public class TacheController {
         this.tacheService = tacheService;
     }
 
-    @GetMapping
-    public List<Tache> getAllTaches() {
-        return tacheService.getAllTaches();
-    }
 
     @PostMapping
-    public Tache createTache(@Valid @RequestBody Tache tache) {
-        return tacheService.saveTache(tache);
+    public Tache createTache(
+            @Valid @RequestBody Tache tache) {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        return tacheService.saveTacheParUtilisateur(tache, email);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTache(@PathVariable int id) {
-        tacheService.deleteTache(id);
+    public void deleteTache(@PathVariable Integer id) {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        tacheService.deleteTacheByIdAndEmail(email, id);
     }
+
+
+    @GetMapping
+    public List<Tache> getMesTaches() {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        return tacheService.getTachesParEmail(email);
+    }
+
 }
