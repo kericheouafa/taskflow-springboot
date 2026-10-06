@@ -29,7 +29,8 @@ public class JwtFilter extends OncePerRequestFilter {
      encore de compte ,il peux creer un compte et acceder a login, sans lui
       demander un token ! c'est logique*/
         String path = request.getServletPath();
-        return path.startsWith("/api/auth/");
+        return path.startsWith("/api/auth/") && !path.equals("/api/auth/refresh");
+
     }
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -44,11 +45,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.replace("Bearer ", "").trim();
-       /*
-        System.out.println("TOKEN REÇU : " + token);
-        System.out.println("TOKEN VALIDE : " + jwtService.validateToken(token));
-        System.out.println("TOKEN APR&Egrave;S SUBSTRING : " + token);
-       */
+
         if (jwtService.validateToken(token)) {
             String email = jwtService.extractEmail(token);
             UsernamePasswordAuthenticationToken authentication =

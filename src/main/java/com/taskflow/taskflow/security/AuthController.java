@@ -2,8 +2,10 @@ package com.taskflow.taskflow.security;
 import com.taskflow.taskflow.model.Utilisateur;
 import com.taskflow.taskflow.repository.UtilisateurRepository;
 import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import com.taskflow.taskflow.security.JwtService;
 import java.util.Optional;
@@ -38,6 +40,7 @@ public class AuthController {
 
         String token = jwtService.generateToken(utilisateur.get().getEmail());
         return ResponseEntity.ok(token);
+
     }
 
 
@@ -57,6 +60,12 @@ public class AuthController {
         utilisateurRepository.save(utilisateur);
 
         String token = jwtService.generateToken(utilisateur.getEmail());
+        return ResponseEntity.ok(token);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<String> refresh(Authentication authentication) {
+        String token = jwtService.generateToken(authentication.getName());
         return ResponseEntity.ok(token);
     }
 
