@@ -60,7 +60,7 @@ public class TacheService {
 
         tache.setUtilisateur(utilisateur);
         tache.setId(0);
-        Statut statutAFaire = statutRepository.findByLibelle("À faire")
+        Statut statutAFaire = statutRepository.findByLibelle("A faire")
                 .orElseThrow(() -> new RuntimeException("Statut À faire introuvable"));
 
         tache.setStatut(statutAFaire);
