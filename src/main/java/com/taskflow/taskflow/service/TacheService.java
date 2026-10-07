@@ -1,7 +1,9 @@
 package com.taskflow.taskflow.service;
 
+import com.taskflow.taskflow.model.Statut;
 import com.taskflow.taskflow.model.Tache;
 import com.taskflow.taskflow.model.Utilisateur;
+import com.taskflow.taskflow.repository.StatutRepository;
 import com.taskflow.taskflow.repository.TacheRepository;
 import com.taskflow.taskflow.repository.UtilisateurRepository;
 import org.springframework.stereotype.Service;
@@ -13,13 +15,16 @@ public class TacheService {
 
     private final TacheRepository tacheRepository;
     private final UtilisateurRepository utilisateurRepository;
+    private final StatutRepository statutRepository;
 
     public TacheService(
             TacheRepository tacheRepository,
-            UtilisateurRepository utilisateurRepository) {
+            UtilisateurRepository utilisateurRepository,
+            StatutRepository statutRepository) {
 
         this.tacheRepository = tacheRepository;
         this.utilisateurRepository = utilisateurRepository;
+       this.statutRepository = statutRepository;
     }
 
 
@@ -42,9 +47,12 @@ public class TacheService {
     }
 
 
-    public List<Tache> getTachesParEmail(String email) {
+    public List<Tache> getTachesParEmail(String email)
+    {
         return tacheRepository.findByUtilisateurEmail(email);
     }
+
+
     public Tache saveTacheParUtilisateur(Tache tache, String email) {
 
         Utilisateur utilisateur = utilisateurRepository.findByEmail(email)
@@ -52,9 +60,31 @@ public class TacheService {
 
         tache.setUtilisateur(utilisateur);
         tache.setId(0);
+        Statut statutAFaire = statutRepository.findByLibelle("À faire")
+                .orElseThrow(() -> new RuntimeException("Statut À faire introuvable"));
+
+        tache.setStatut(statutAFaire);
 
         return tacheRepository.save(tache);
     }
+
+
+    public Tache modifierStatut(Integer idTache, Integer idStatut, String email) {
+
+        Tache tache = tacheRepository
+                .findByUtilisateurEmailAndId(email, idTache)
+                .orElseThrow(() -> new RuntimeException("Tâche introuvable"));
+
+        Statut statut = statutRepository
+                .findById(idStatut)
+                .orElseThrow(() -> new RuntimeException("Statut introuvable"));
+
+        tache.setStatut(statut);
+
+        return tacheRepository.save(tache);
+    }
+
+
 
 
 }

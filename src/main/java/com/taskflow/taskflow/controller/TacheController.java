@@ -57,4 +57,17 @@ public class TacheController {
         return tacheService.getTachesParEmail(email);
     }
 
+    @PutMapping("/{id}/statut/{idStatut}")
+    public Tache modifierStatut(
+            @PathVariable Integer id,
+            @PathVariable Integer idStatut) {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        return tacheService.modifierStatut(id, idStatut, email);
+    }
+
 }
