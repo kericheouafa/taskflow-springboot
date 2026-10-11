@@ -55,7 +55,7 @@ public class AuthController {
         utilisateur.setEmail(request.getEmail());
         utilisateur.setMotDePasse(passwordEncoder.encode(request.getPassword()));
         utilisateur.setRole("USER");
-        utilisateur.setDateCreation(java.time.LocalDateTime.now());
+        utilisateur.setDateCreation(java.time.LocalDate.now());
 
         utilisateurRepository.save(utilisateur);
 

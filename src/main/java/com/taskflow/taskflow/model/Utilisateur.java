@@ -2,7 +2,7 @@ package com.taskflow.taskflow.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 // Getters/setters écrits à la main : Lombok (@Data) n'était pas pris en compte sur cette classe
@@ -20,7 +20,7 @@ public class Utilisateur {
     private String email;
     private String role;
     private String motDePasse;
-    private LocalDateTime dateCreation;
+    private LocalDate dateCreation;
 
     public int getId() {
         return id;
@@ -62,11 +62,11 @@ public class Utilisateur {
         return motDePasse;
     }
 
-    public void setDateCreation(LocalDateTime dateCreation) {
+    public void setDateCreation(LocalDate dateCreation) {
         this.dateCreation = dateCreation;
     }
 
-    public LocalDateTime getDateCreation() {
+    public LocalDate getDateCreation() {
         return dateCreation;
     }
 }

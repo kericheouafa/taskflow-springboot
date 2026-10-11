@@ -1,7 +1,7 @@
 package com.taskflow.taskflow.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.*;
 
@@ -21,10 +21,10 @@ public class Tache {
     @Min(1)
     @Max(3)
     private int priorite;
-    private LocalDateTime dateCreation;
+    private LocalDate dateCreation;
     @NotNull
     @Future
-    private LocalDateTime dateLimite;
+    private LocalDate dateLimite;
     @ManyToOne
     @JoinColumn(name = "id_statut")
     private Statut statut;
@@ -40,19 +40,19 @@ public class Tache {
         return id;
     }
 
-    public void setDateCreation(LocalDateTime dateCreation) {
+    public void setDateCreation(LocalDate dateCreation) {
         this.dateCreation = dateCreation;
     }
 
-    public LocalDateTime getDateCreation() {
+    public LocalDate getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateLimite(LocalDateTime dateLimite) {
+    public void setDateLimite(LocalDate dateLimite) {
         this.dateLimite = dateLimite;
     }
 
-    public LocalDateTime getDateLimite() {
+    public LocalDate getDateLimite() {
         return dateLimite;
     }
 
