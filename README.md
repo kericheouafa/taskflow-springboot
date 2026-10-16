@@ -85,6 +85,17 @@ Le serveur démarre sur `http://localhost:8080`.
 
 Le token est ensuite envoyé dans l'en-tête `Authorization` des requêtes protégées.
 
+## Tâches
+
+Toutes ces routes sont protégées : l'utilisateur est identifié par son token, et chaque requête ne concerne que **ses** tâches.
+
+| Méthode | Route | Rôle |
+|---|---|---|
+| GET | `/taches` | liste des tâches de l'utilisateur connecté |
+| POST | `/taches` | création d'une tâche (statut « A faire » ajouté automatiquement) |
+| PUT | `/taches/{id}/statut/{idStatut}` | changement du statut d'une tâche |
+| DELETE | `/taches/{id}` | suppression d'une tâche |
+
 ## Règles métier
 
 - À la création, une tâche reçoit automatiquement le statut **« A faire »** et est rattachée à l'utilisateur connecté.

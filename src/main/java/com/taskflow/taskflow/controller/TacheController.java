@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {
+        "https://taskflow-frontend-three-eosin.vercel.app",
+        "http://localhost:4200"
+})
 @RestController
 @RequestMapping("/taches")
 
