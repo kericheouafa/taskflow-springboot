@@ -87,4 +87,7 @@ public class Tache {
     public Utilisateur getUtilisateur() {
         return utilisateur;
     }
+
+    public void setUtilisateur(int i) {
+    }
 }
